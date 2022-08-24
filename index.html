@@ -19,7 +19,11 @@
     <main id="root">
       <div class="container">
         <div class="slider">
-          <ul class="slides-wrapper">
+          <ul
+            class="slides-wrapper"
+            @mouseover="resetTimer() "
+            @mouseleave="restartTimer()"
+          >
             <template v-for="(slide, i) in slides">
               <li class="slide" :class="i === currentIndex ? 'active' : ''">
                 <img :src="slide" alt="" />

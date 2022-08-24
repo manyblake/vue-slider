@@ -15,12 +15,20 @@ const app = new Vue({
     slides,
   },
   methods: {
+    resetTimer() {
+      clearInterval(interval);
+    },
+    restartTimer() {
+      interval = setInterval(this.nextSlide, 3000);
+    },
     nextSlide() {
       if (this.currentIndex < slides.length - 1) {
         this.currentIndex++;
       } else {
         this.currentIndex = 0;
       }
+      this.resetTimer();
+      this.restartTimer();
     },
     prevSlide() {
       if (this.currentIndex > 0) {
@@ -28,6 +36,11 @@ const app = new Vue({
       } else {
         this.currentIndex = slides.length - 1;
       }
+      this.resetTimer();
+      this.restartTimer();
     },
+  },
+  created() {
+    interval = setInterval(this.nextSlide, 3000);
   },
 });
