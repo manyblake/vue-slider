@@ -14,6 +14,13 @@ const app = new Vue({
     currentIndex: 0,
     slides,
   },
+
+  computed: {
+    lastIndex() {
+      return this.slides.length - 1;
+    },
+  },
+
   methods: {
     resetTimer() {
       clearInterval(interval);
@@ -22,22 +29,32 @@ const app = new Vue({
       interval = setInterval(this.nextSlide, 3000);
     },
     nextSlide() {
-      if (this.currentIndex < slides.length - 1) {
-        this.currentIndex++;
-      } else {
-        this.currentIndex = 0;
-      }
+      // if (this.currentIndex < this.lastIndex) {
+      //   this.currentIndex++;
+      // } else {
+      //   this.currentIndex = 0;
+      // }
+      this.currentIndex = this.isEnd() ? 0 : this.currentIndex + 1;
       this.resetTimer();
       this.restartTimer();
     },
     prevSlide() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--;
-      } else {
-        this.currentIndex = slides.length - 1;
-      }
+      // if (this.currentIndex > 0) {
+      //   this.currentIndex--;
+      // } else {
+      //   this.currentIndex = this.lastIndex;
+      // }
+      this.currentIndex = this.isStart()
+        ? this.lastIndex
+        : this.currentIndex - 1;
       this.resetTimer();
       this.restartTimer();
+    },
+    isEnd() {
+      return this.currentIndex === this.lastIndex;
+    },
+    isStart() {
+      return this.currentIndex === 0;
     },
   },
   created() {
